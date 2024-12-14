@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Table in React using CDN Link</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid lightgray;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        input {
+            width: 100%;
+            box-sizing: border-box;
+            border: none;
+            outline: none;
+            background: transparent;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>  
+    <!-- // React will render the component in above div -->
+    <script type="text/babel">
+        const { useState } = React;
+
+        function EditableTable() {
+            const [tableData, setTableData] = useState([
+                { task: "Onboarding Call", value: "" },
+                { task: "Google Search Console Access", value: "" },
+                { task: "Google Analytics Access", value: "" },
+                { task: "Website Access", value: "" },
+                { task: "Technical Audit", value: "" },
+                { task: "Anchor Text and Semantic Analysis", value: "" },
+                { task: "Competitor Analysis", value: "" },
+                { task: "Anchor Text / URL Mapping", value: "" },
+                { task: "Google Data Studio Report + Local Reporting Suite", value: "" },
+                { task: "Site Level Optimization", value: "" },
+                { task: "On Page Optimization", value: "" },
+                { task: "Content Creation", value: "" },
+                { task: "Content Publishing", value: "" },
+                { task: "Premium Press Release", value: "" },
+                { task: "Authority Niche Placements", value: "" },
+                { task: "Review Management", value: "" },
+                { task: "Index Links", value: "" },
+                { task: "Video Recap", value: "" },
+            ]);
+
+            const handleInputChange = (index, e) => {
+                const newData = [...tableData];
+                newData[index].value = e.target.value;
+                setTableData(newData);
+            };
+
+            const handleSubmit = () => {
+                console.log(`data is: ${JSON.stringify(tableData)}`);
+                alert("Check browser console for data and it is ready to send to BackendAPI");
+            };
+
+            return (
+                <div>
+                    <h2>Editable Task Table</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Month 1</th>                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {tableData.map((row, index) => (
+                                <tr key={index}>
+                                    <td>{row.task}</td>
+                                    <td>
+                                        <input
+                                            type="text"
+                                            value={row.value}
+                                            onChange={(e) => handleInputChange(index, e)}
+                                            placeholder="Enter New Value"
+                                        />
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                    <br />
+                    <button onClick={handleSubmit}>Submit Data</button>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<EditableTable />, document.getElementById("root"));
+    </script>
+</body>
+</html>

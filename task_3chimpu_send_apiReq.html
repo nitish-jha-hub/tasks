@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API Header Display</title>
+</head>
+<body>
+  <h1>Send Phone Number</h1>
+  <form id="apiForm">
+    <label for="phonenumber">Phone Number:</label>
+    <input type="text" id="phonenumber" name="phonenumber" required>
+    <button type="submit">Submit</button>
+  </form>
+  
+  <h2>Response Headers:</h2>
+  <pre id="headersOutput"></pre>
+
+  <h2>Response Body</h2>
+    <pre id="responsebody"></pre>
+
+  <script>
+    document.getElementById('apiForm').addEventListener('submit', async function(event) {
+      event.preventDefault();
+
+      const phoneNumber = document.getElementById('phonenumber').value;
+      const url = 'https://chimpu.online/api/post.php';
+      
+      try {
+        const response = await fetch(url, {
+          method: 'POST',
+          body: JSON.stringify({ "phonenumber": phoneNumber }),
+        });
+
+        // console.log('Response:', await response.json());
+
+        // Display response body
+        document.getElementById('responsebody').textContent = JSON.stringify(await response.json(),null,11);
+
+        // console response headers
+        response.headers.forEach((value, key) => {
+            console.log(`${key}: ${value}`)});
+        console.log(response.headers.get('Phoneorigen'));
+        console.log(response.headers.has("phoneorigen"));
+
+        // Extract headers from response
+        const headers = Array.from(response.headers.entries())
+          .map(([key, value]) => `${key}: ${value}`)
+          .join('\n');
+        
+        // Display headers
+        document.getElementById('headersOutput').textContent = headers;
+      } catch (error) {
+        console.error('Error:', error);
+        document.getElementById('headersOutput').textContent = 'An error occurred. Check console for details.';
+      }
+    });
+  </script>
+</body>
+</html>
